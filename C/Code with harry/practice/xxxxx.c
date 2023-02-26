@@ -1,40 +1,63 @@
 #include <stdio.h>
-#include <stdlib.h>
-struct Node
+int printArray(int *arr, int size)
 {
-    int data;
-    struct Node *left;
-    struct Node *right;
-};
-struct Node *createNode(int data)
-{
-    struct Node *root = (struct Node *)malloc(sizeof(struct Node));
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
-}
-void inOrderTraversal(struct Node *root)
-{
-    if (root != NULL)
+    for (int i = 0; i < size; i++)
     {
-        printf("%d ", root->data);
-        inOrderTraversal(root->left);
-        inOrderTraversal(root->right);
+        printf("%d   ", arr[i]);
+    }
+    printf("\n");
+}
+
+void BubbleSort(int *arr, int size)
+{
+    int isSorted = 0;
+    for (int i = 0; i < size; i++)
+    {
+        printf("Working on the Swap Number: %d \n", i + 1);
+        int isSorted = 1;
+        for (int j = 0; j < size - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                isSorted = 0;
+            }
+        }
+        if (isSorted)
+        {
+            return;
+        }
+    }
+}
+void InserSort(int *arr, int size)
+{
+    for (int i = 1; i <= size - 1; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
     }
 }
 
 int main()
 {
-    struct Node *n = createNode(2);
-    struct Node *n1 = createNode(4);
-    struct Node *n2 = createNode(6);
-    struct Node *n3 = createNode(3);
-    struct Node *n4 = createNode(2);
-    n->left = n1;
-    n->right = n2;
-    n1->left = n3;
-    n1->right = n4;
-    inOrderTraversal(n);
+    int arr[] = {7, 11, 9, 2, 17, 4};
+    int size = sizeof(arr) / sizeof(int);
+    printArray(arr, size);
+
+    // **************************************
+    // BubbleSort(arr, size);
+    InserSort(arr, size);
+    // SelectionSort(arr, size);
+    // **************************************
+
+    printArray(arr, size);
     return 0;
 }
